@@ -1,8 +1,10 @@
+import {Container} from 'react-bootstrap'
+
 export const Footer = () => {
 	return (
-		<div>
-			<h1>Footer</h1>
-		</div>
+		<Container className='border-top'>
+			<p className='text-black-50 text-center'>Paul Lightman - 2023</p>
+		</Container>
 	)
 }
 
