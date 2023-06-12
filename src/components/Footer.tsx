@@ -1,10 +1,11 @@
-import {Container} from 'react-bootstrap'
+import {Stack} from 'react-bootstrap'
+import {currentYear} from '../utils/currentYear.ts'
 
 export const Footer = () => {
 	return (
-		<Container className='border-top'>
-			<p className='text-black-50 text-center'>Paul Lightman - 2023</p>
-		</Container>
+		<Stack className='border-top' style={{height: '50px'}}>
+			<p className='text-black-50 text-center mt-auto'>Paul Lightman - {currentYear()}</p>
+		</Stack>
 	)
 }
 

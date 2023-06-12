@@ -1,15 +1,17 @@
+import {ReactElement} from 'react'
 import {Pagination} from 'react-bootstrap'
 import {useAppDispatch, useAppSelector} from '../lib/redux/hooks.ts'
-import {getPosts, nextPage, prevPage, setPage} from '../store/reducers/postsSlice.ts'
+import {nextPage, prevPage, setPage} from '../store/reducers/postsSlice.ts'
 
 export const PaginationEl = () => {
 	const dispatch = useAppDispatch()
 	const {total, page, limit} = useAppSelector(state => state.posts)
-	const paginationList = []
+
+	const paginationList: ReactElement[] = []
+	const TOTAL_PAGE = total / limit
 
 	const handleSetPage = (page: number) => {
 		dispatch(setPage(page))
-		dispatch(getPosts())
 	}
 
 	const handleNextPage = () => {
@@ -17,7 +19,6 @@ export const PaginationEl = () => {
 			return
 		}
 		dispatch(nextPage())
-		dispatch(getPosts())
 	}
 
 	const handlePrevPage = () => {
@@ -25,16 +26,18 @@ export const PaginationEl = () => {
 			return
 		}
 		dispatch(prevPage())
-		dispatch(getPosts())
 	}
 
 	const handleFirstPage = () => {
 		dispatch(setPage(1))
-		dispatch(getPosts())
+	}
+
+	const handleLastPage = () => {
+		dispatch(setPage(TOTAL_PAGE))
 	}
 
 
-	for (let i = 1; i < total / limit; i++) {
+	for (let i = 1; i < TOTAL_PAGE + 1; i++) {
 		paginationList.push(<Pagination.Item key={i} active={i === page}
 														 onClick={() => handleSetPage(i)}>{i}</Pagination.Item>)
 	}
@@ -45,7 +48,7 @@ export const PaginationEl = () => {
 			<Pagination.Prev onClick={handlePrevPage} />
 			{paginationList.map(el => el)}
 			<Pagination.Next onClick={handleNextPage} />
-			<Pagination.Last />
+			<Pagination.Last onClick={handleLastPage} />
 		</Pagination>
 	)
 }
