@@ -7,6 +7,9 @@ export interface IPosts {
 
 export interface IPostsSlice {
 	posts: Array<IPosts>
+	total: number
+	page: number
+	limit: number
 	loading: boolean
 	error: string | null
 }
