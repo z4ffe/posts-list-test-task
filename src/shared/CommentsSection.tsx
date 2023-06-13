@@ -2,14 +2,18 @@ import {FC} from 'react'
 import {Stack} from 'react-bootstrap'
 import {IComments} from '../types/interfaces/comments.ts'
 
-export const CommentsSection: FC<IComments[]> = (commentsList) => {
+interface IProps {
+	commentsList: IComments[]
+}
+
+export const CommentsSection: FC<IProps> = ({commentsList}) => {
 	return (
 		<Stack>
-			{/* 	{commentsList.map(comment => {
+			{commentsList.map((comment) => {
 				return (
-					<div>{comment.body}</div>
+					<div key={comment.id}>{comment.body}</div>
 				)
-			})} */}
+			})}
 		</Stack>
 	)
 }

@@ -10,6 +10,10 @@ export const PostTile: FC<Omit<IPosts, 'userId'>> = ({title, body, id}) => {
 	const [commentsList, setCommentsList] = useState<IComments[]>([])
 
 	const handleComments = async () => {
+		if (commentsList.length) {
+			setCommentsList([])
+			return
+		}
 		const comments = await fetchCommentsByPostId(id)
 		setCommentsList(comments)
 	}
@@ -22,7 +26,7 @@ export const PostTile: FC<Omit<IPosts, 'userId'>> = ({title, body, id}) => {
 				<Image src={avatar} width='30px' />
 				<Button size='sm' onClick={handleComments}>Show comments</Button>
 			</Stack>
-			<CommentsSection commentsList={commentsList} />
+			{commentsList.length ? <CommentsSection commentsList={commentsList} /> : null}
 		</Stack>
 	)
 }
