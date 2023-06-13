@@ -17,7 +17,7 @@ export const Posts = () => {
 		<Stack gap={2}>
 			{!loading ? posts.map(el => {
 				return (
-					<PostTile key={el.id} id={el.id} title={el.title} body={el.body} />
+					<PostTile key={el.id} id={el.id} title={el.title} body={el.body} userId={el.userId} />
 				)
 			}) : <Spinner animation='grow' />}
 			<PaginationEl />
