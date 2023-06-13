@@ -8,14 +8,18 @@ import {CommentsSection} from './CommentsSection.tsx'
 
 export const PostTile: FC<Omit<IPosts, 'userId'>> = ({title, body, id}) => {
 	const [commentsList, setCommentsList] = useState<IComments[]>([])
+	const [isLoading, setIsLoading] = useState<boolean>(false)
+	const COMMENTS_BUTTON_TEXT = isLoading ? 'Loading...' : 'Show comments'
 
 	const handleComments = async () => {
 		if (commentsList.length) {
 			setCommentsList([])
 			return
 		}
+		setIsLoading(true)
 		const comments = await fetchCommentsByPostId(id)
 		setCommentsList(comments)
+		setIsLoading(false)
 	}
 
 	return (
@@ -24,7 +28,8 @@ export const PostTile: FC<Omit<IPosts, 'userId'>> = ({title, body, id}) => {
 			<p className='text-center'>{body}</p>
 			<Stack direction='horizontal' className='justify-content-end gap-3'>
 				<Image src={avatar} width='30px' />
-				<Button size='sm' onClick={handleComments}>Show comments</Button>
+				<Button disabled={isLoading} size='sm'
+						  onClick={handleComments}>{COMMENTS_BUTTON_TEXT}</Button>
 			</Stack>
 			{commentsList.length ? <CommentsSection commentsList={commentsList} /> : null}
 		</Stack>
